@@ -1,0 +1,51 @@
+// DSL 과제에 사용한 engine_render() 코드입니다.
+
+void engine_render()
+{
+    // 배경색 검정
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+
+    // 빨간색 채워진 사각형
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_Rect rect1 = { 50, 50, 200, 100 };
+    SDL_RenderFillRect(renderer, &rect1);
+
+    // 초록색 테두리 사각형
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    SDL_Rect rect2 = { 300, 50, 200, 100 };
+    SDL_RenderDrawRect(renderer, &rect2);
+
+    // 파란색 채워진 사각형
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_Rect rect3 = { 550, 50, 200, 100 };
+    SDL_RenderFillRect(renderer, &rect3);
+
+    // 폰트 불러오기
+    TTF_Font* font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 30);
+
+    // 글자 색
+    SDL_Color color = { 255, 255, 255 };
+
+    // 텍스트 Surface 생성
+    SDL_Surface* surface =
+        TTF_RenderText_Solid(font, "Im Eunchan", color);
+
+    // 텍스처 생성
+    SDL_Texture* texture =
+        SDL_CreateTextureFromSurface(renderer, surface);
+
+    // 글자 위치
+    SDL_Rect textRect = { 300, 300, surface->w, surface->h };
+
+    // 화면에 출력
+    SDL_RenderCopy(renderer, texture, NULL, &textRect);
+
+    // 메모리 해제
+    SDL_FreeSurface(surface);
+    SDL_DestroyTexture(texture);
+    TTF_CloseFont(font);
+
+    // 화면 업데이트
+    SDL_RenderPresent(renderer);
+}
